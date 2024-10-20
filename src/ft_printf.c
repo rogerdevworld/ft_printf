@@ -1,4 +1,4 @@
-#include "libftprintf.h"
+#include "../include/libftprintf.h"
 
 /* dejare el ft_printf para manejo de errores etc y llamar a las funciones finales */
 int ft_printf(const char *str, ...)
