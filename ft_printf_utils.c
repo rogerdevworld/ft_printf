@@ -1,4 +1,4 @@
-#include "../includes/ft_printf.h"
+#include "libftprintf.h"
 
 /* • %c Imprime un solo carácter. */
 void	ft_putchar(char character, int *length)
@@ -41,18 +41,18 @@ void	ft_putnbr(int nbr, int *length)
 	if (nbr < 0)
 	{
 		ft_putchar('-', length);
-		ft_nbr(nbr * -1, length);
+		ft_putnbr(nbr * -1, length);
 	}
 	else
 	{
 		if (nbr > 9)
-			ft_nbr(nbr / 10, length);
+			ft_putnbr(nbr / 10, length);
 		ft_putchar(nbr % 10 + '0', length);
 	}
 }
 
 /* • %p El puntero void * dado como argumento se imprime en formato hexadecimal. */
-void	ft_pointer(size_t pointer, int *length)
+void	ft_pointer(uintptr_t pointer, int *length)
 {
 	char	str_hex[25];
 	int		i;
@@ -79,7 +79,7 @@ void	ft_pointer(size_t pointer, int *length)
 
 /* • %x Imprime un número hexadecimal (base 16) en minúsculas.
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
-void	ft_hex(unsigned int x, int *length, char x)
+void	ft_hex(unsigned int nbr, int *length, char x)
 {
 	char	str_hex[25];
 	char	*hex;
@@ -90,15 +90,15 @@ void	ft_hex(unsigned int x, int *length, char x)
 	else
 		hex = "0123456789abcdef";
 	i = 0;
-	if (x == 0)
+	if (nbr == 0)
 	{
 		ft_putchar('0', length);
 		return ;
 	}
-	while (x != 0)
+	while (nbr != 0)
 	{
-		str_hex[i] = hex [x % 16];
-		x = x / 16;
+		str_hex[i] = hex [nbr % 16];
+		nbr = nbr / 16;
 		i++;
 	}
 	while (i--)

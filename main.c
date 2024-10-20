@@ -23,3 +23,5 @@ int main(void)
 
     return 0;
 }
+
+//comand > cc -Wall -Wextra -Werror main.c ft_printf.c ft_flags.c ft_printf_utils.c -I./include

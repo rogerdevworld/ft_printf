@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-SRC = ./src/ft_printf.c ./src/ft_flags.c ./src/ft_printf_utils.c
+SRC = ft_printf.c ft_flags.c ft_printf_utils.c
 OBJS = $(SRC:.c = .o)
 HEADER = libftprintf.h
 CC = cc
@@ -14,10 +14,10 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
+	rm -f *.o
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 	
 re: fclean all
 

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 /* main funtion*/
 int ft_printf(const char *str, ...)
