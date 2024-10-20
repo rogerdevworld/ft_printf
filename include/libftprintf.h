@@ -1,15 +1,37 @@
 #ifndef LIBFTPRINTF_H
 #define LIBFTPRINTF_H
 
-
-
-int is_flag(char c)
-
-/* get size for args*/
-int ft_size_args(const char *str, int *i);
+/* lib std */
+#include <stdio.h>
+#include <unistd.h>
+#include <stdarg.h>
 
 /* main funtion*/
 int ft_printf(const char *str, ...)
 
-#endif
+/* cazador de flgas */
+void    is_flag(char c, va_list args, int *length, int *i);
 
+/* • %u Imprime un número decimal (base 10) sin signo. */
+void	ft_unsigned_putnbr(unsigned int u, int *length);
+
+/* • %c Imprime un solo carácter. */
+void ft_putchar(const char c, int length);
+
+/* • %s Imprime una string (como se define por defecto en C) */
+void ft_putstr(char *args, int *length);
+
+/* 
+• %d Imprime un número decimal (base 10).
+• %i Imprime un entero en base 10.
+*/
+void  ft_putnbr(int nbr, int *length);
+
+/* • %p El puntero void * dado como argumento se imprime en formato hexadecimal. */
+void  ft_pointer(size_t pointer, int *length);
+
+/* • %x Imprime un número hexadecimal (base 16) en minúsculas.
+• %X Imprime un número hexadecimal (base 16) en mayúsculas. */
+void  ft_hex(unsigned int nbr, int length, char x);
+
+#endif
