@@ -8,7 +8,7 @@
 #include <stdint.h>
 
 /* main funtion*/
-int ft_printf(const char *str, ...)
+int ft_printf(const char *str, ...);
 
 /* cazador de flgas */
 void    is_flag(char c, va_list args, int *length, int *i);
@@ -17,7 +17,7 @@ void    is_flag(char c, va_list args, int *length, int *i);
 void	ft_unsigned_putnbr(unsigned int u, int *length);
 
 /* • %c Imprime un solo carácter. */
-void ft_putchar(const char c, int length);
+void ft_putchar(const char c, int *length);
 
 /* • %s Imprime una string (como se define por defecto en C) */
 void ft_putstr(char *args, int *length);
@@ -33,6 +33,6 @@ void  ft_pointer(size_t pointer, int *length);
 
 /* • %x Imprime un número hexadecimal (base 16) en minúsculas.
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
-void  ft_hex(unsigned int nbr, int length, char x);
+void  ft_hex(unsigned int nbr, int *length, char x);
 
 #endif

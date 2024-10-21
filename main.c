@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/21 17:36:29 by rmarrero          #+#    #+#             */
+/*   Updated: 2024/10/21 17:40:58 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libftprintf.h"
 
+/* bateria de tester */
 int main(void)
 {
     char c = 'A';
@@ -10,7 +22,7 @@ int main(void)
     unsigned int u_decimal = 123456789;
     unsigned int hex = 0x2A;
     unsigned int hex_upper = 0x2A;
-
+ 
     ft_printf("Character: %c\n", c);
     ft_printf("String: %s\n", str);
     ft_printf("Pointer: %p\n", ptr);
@@ -23,5 +35,3 @@ int main(void)
 
     return 0;
 }
-
-//comand > cc -Wall -Wextra -Werror main.c ft_printf.c ft_flags.c ft_printf_utils.c -I./include
