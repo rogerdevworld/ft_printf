@@ -37,7 +37,7 @@ void	is_flag(char c, va_list args, int *length, int *i)
 /* %u Print an unsigned decimal number (base 10). */
 void	ft_unsigned_putnbr(unsigned int unsgined_nbr, int *length)
 {
-	if (unsigned_nbr > 9)
+	if (unsgined_nbr > 9)
 		ft_unsigned_putnbr(unsgined_nbr / 10, length);
-	ft_putchar(unsigned_nbr % 10 + '0', length);
+	ft_putchar(unsgined_nbr % 10 + '0', length);
 }
