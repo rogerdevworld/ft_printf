@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/22 14:12:15 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/libftprintf.h"
+#include "../include/ft_printf.h"
 
 /* %char hunter */
 void	is_flag(char c, va_list args, int *length, int *i)

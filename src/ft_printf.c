@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/22 14:25:36 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/libftprintf.h"
+#include "../include/ft_printf.h"
 
 /* dejare el ft_printf para manejo de errores 
  * etc y llamar a las funciones finales */

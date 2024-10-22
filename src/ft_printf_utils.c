@@ -9,7 +9,7 @@
 /*   Updated: 2024/10/22 14:26:01 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/libftprintf.h"
+#include "../include/ft_printf.h"
 
 /* %c Prints a single character. */
 void	ft_putchar(char character, int *length)
