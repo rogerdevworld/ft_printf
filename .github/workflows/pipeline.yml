@@ -94,7 +94,7 @@ jobs:
 
     - name: List repository contents
       run: |
-        cd ~/work/{REMPLAZAME}/{REMPLAZAME}
+        cd ~/work/ft_printf/ft_printf
         echo "Current directory: $(pwd)"
         ls -la
         cd ~/francinette
@@ -124,7 +124,7 @@ jobs:
         whereis norminette
         echo "Norminette version:"
         norminette -v || echo "Failed to get Norminette version"
-        cd ~/work/{REMPLAZAME}/{REMPLAZAME}
+        cd ~/work/ft_printf/ft_printf
         echo "Current directory: $(pwd)"
         ls -la
         norminette
@@ -136,10 +136,10 @@ jobs:
     - name: Run Francinette
       id: check_phrase
       run: |
-        rm -rf ~/work/{REMPLAZAME}/{REMPLAZAME}_tmp
-        cp -r ~/work/{REMPLAZAME}/{REMPLAZAME} ~/work/{REMPLAZAME}/{REMPLAZAME}_tmp
-        cd ~/work/{REMPLAZAME}/{REMPLAZAME}_tmp
-        rm -rf ~/work/{REMPLAZAME}/{REMPLAZAME}_tmp/.github/
+        rm -rf ~/work/ft_printf/ft_printf_tmp
+        cp -r ~/work/ft_printf/ft_printf ~/work/ft_printf/ft_printf_tmp
+        cd ~/work/ft_printf/ft_printf_tmp
+        rm -rf ~/work/ft_printf/ft_printf_tmp/.github/
         echo "Current directory: $(pwd)"
         ls -la
         echo "Norminette version:"
