@@ -1,13 +1,24 @@
-#include "libftprintf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/22 14:07:36 by rmarrero          #+#    #+#             */
+/*   Updated: 2024/10/22 14:26:01 by rmarrero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../include/libftprintf.h"
 
-/* • %c Imprime un solo carácter. */
+/* %c Prints a single character. */
 void	ft_putchar(char character, int *length)
 {
 	write(1, &character, 1);
 	(*length)++;
 }
 
-/* • %s Imprime una string (como se define por defecto en C) */
+/* %s Prints a string (as defined by default in C) */
 void	ft_putstr(char *args, int *length)
 {
 	size_t	i;
@@ -27,8 +38,8 @@ void	ft_putstr(char *args, int *length)
 }
 
 /* 
-• %d Imprime un número decimal (base 10).
-• %i Imprime un entero en base 10.
+- %d Prints a decimal number (base 10).
+- %i Prints an integer in base 10.
 */
 void	ft_putnbr(int nbr, int *length)
 {
@@ -51,7 +62,7 @@ void	ft_putnbr(int nbr, int *length)
 	}
 }
 
-/* • %p El puntero void * dado como argumento se imprime en formato hexadecimal. */
+/* %p The void pointer * given as argument is printed in hexadecimal format. */
 void	ft_pointer(uintptr_t pointer, int *length)
 {
 	char	str_hex[25];
@@ -77,8 +88,8 @@ void	ft_pointer(uintptr_t pointer, int *length)
 		ft_putchar(str_hex[i], length);
 }
 
-/* • %x Imprime un número hexadecimal (base 16) en minúsculas.
-• %X Imprime un número hexadecimal (base 16) en mayúsculas. */
+/* %x Prints a hexadecimal number (base 16) in lower case.
+%X Prints a hexadecimal number (base 16) in uppercase. */
 void	ft_hex(unsigned int nbr, int *length, char x)
 {
 	char	str_hex[25];

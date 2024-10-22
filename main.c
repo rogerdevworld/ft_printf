@@ -6,10 +6,10 @@
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:36:29 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/10/21 17:40:58 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:48:51 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
+#include "include/libftprintf.h"
 
 /* bateria de tester */
 int main(void)

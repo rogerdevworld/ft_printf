@@ -1,23 +1,26 @@
 NAME = libftprintf.a
-SRC = ft_printf.c ft_flags.c ft_printf_utils.c
-OBJS = $(SRC:.c = .o)
+SRC = ./src/ft_printf.c ./src/ft_flags.c ./src/ft_printf_utils.c
+OBJS = $(SRC:.c=.o)
 HEADER = libftprintf.h
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+RM = rm -f
+AR = ar rsc
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rsc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 	
 re: fclean all
 
