@@ -71,13 +71,14 @@ void	ft_pointer(uintptr_t pointer, int *length)
 
 	hex = "0123456789abcdef";
 	i = 0;
-	write(1, "0x", 2);
-	(*length) += 2;
 	if (pointer == 0)
 	{
-		ft_putchar('0', length);
+		write(1, "(nil)", 5);
+		(*length) += 5;
 		return ;
 	}
+	write(1, "0x", 2);
+	(*length) += 2;
 	while (pointer != 0)
 	{
 		str_hex[i] = hex[pointer % 16];
