@@ -6,7 +6,7 @@
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:15:26 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/10/22 14:19:28 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:35:05 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFTPRINTF_H
@@ -25,7 +25,7 @@ int		ft_printf(const char *str, ...);
 void	is_flag(char c, va_list args, int *length, int *i);
 
 /* • %u Imprime un número decimal (base 10) sin signo. */
-void	ft_unsigned_putnbr(unsigned int unsigned_nbr int *length);
+void	ft_unsigned_putnbr(unsigned int unsigned_nbr, int *length);
 
 /* • %c Imprime un solo carácter. */
 void	ft_putchar(const char c, int *length);
