@@ -18,9 +18,11 @@ int	ft_printf(const char *str, ...)
 	int		i;
 	va_list	args;
 	int		length;
+	int		flag;
 
 	i = 0;
 	length = 0;
+	flag = 1;
 	va_start(args, str);
 	if (!*str)
 		return (0);
@@ -30,12 +32,17 @@ int	ft_printf(const char *str, ...)
 		{
 			i++;
 			if (str[i])
-				is_flag(str[i], args, &length, &i);
+				if (ft_validation(str[i]) == 1)
+					is_flag(str[i], args, &length, &flag);
+				else
+					return (-1);
 			else
 				break ;
 		}
 		else
-			ft_putchar(str[i], &length);
+			ft_putchar(str[i], &length, &flag);
+		if (flag == -1)
+			return (-1);
 		i++;
 	}
 	va_end(args);
