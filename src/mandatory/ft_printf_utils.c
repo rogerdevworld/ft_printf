@@ -6,10 +6,10 @@
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:07:36 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/10/23 19:19:54 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:23:14 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/ft_printf.h"
+#include "../../include/ft_printf.h"
 
 /* %c Prints a single character. */
 void	ft_putchar(char character, int *length, int *flag)

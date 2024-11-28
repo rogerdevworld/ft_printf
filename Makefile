@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-SRC = ./src/ft_printf.c ./src/ft_flags.c ./src/ft_printf_utils.c
+SRC = ./src/mandaroty/ft_printf.c ./src/mandaroty/ft_flags.c ../src/mandatory/ft_printf_utils.c
 OBJS = $(SRC:.c=.o)
 HEADER = ft_printf.h
 CC = cc

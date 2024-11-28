@@ -6,10 +6,10 @@
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:06:47 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/10/22 14:25:36 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:23:01 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/ft_printf.h"
+#include "../../include/ft_printf.h"
 
 /* dejare el ft_printf para manejo de errores 
  * etc y llamar a las funciones finales */

@@ -51,6 +51,10 @@ int main(void)
     // Test 11: Imprimir un '%' solo fortmat
     len = ft_printf("Texto con porcentaje %% solo: \n% en medio\n");
     printf("Longitud de la cadena impresa: %d\n", len);
+   
+    //Test 12: Retornar -1 print hasta %
+    printf("\nCaso de error origninal -1: %i", printf("antes \n% despues\n"));
+    ft_printf("\nCaso de error copia -1: %i", ft_printf("antes \n% despues\n"));
     return 0;
 }
 
