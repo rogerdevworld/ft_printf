@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*   ft_flags_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:06:23 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/11/26 16:22:42 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:53:05 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/ft_printf.h"
-
+//hola ayoub
 /* %char hunter */
 void	is_flag(char c, va_list args, int *length, int *flag)
 {
