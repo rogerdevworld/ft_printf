@@ -17,22 +17,23 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include <stdlib.h>
 
-/* sstruct of bonus part */
-typedef struct fs_printf                       
-{                        
-      va_list  args;
-      int   width;
-      int   accuracy;
-      int   zero;  
-      int   dot;
-      int   dash;   
-      int   total_lenght;             
-      int   sign;              
-      int   is_zero;                
-      int   percen;   
-      int   space;     
-}    ft_printf;
+/* struct of bonus part */
+typedef struct s_printf
+{
+    int width;            // Ancho mínimo (field width)
+    int accuracy;         // Precisión (si está presente)
+    int zero;             // Flag para '0' (rellenar con ceros)
+    int dot;              // Flag para '.' (indica la precisión)
+    int dash;             // Flag para '-' (alineación a la izquierda)
+    int total_length;     // Longitud total de la salida (después de aplicar todos los flags)
+    int sign;             // Flag para el signo (indica si el número es positivo o negativo)
+    int is_zero;          // Flag para indicar si el valor es cero (especialmente para números)
+    int percent;          // Flag para el '%' (indica que es un formato de porcentaje)
+    int space;            // Flag para el espacio (' ') (indica si hay un espacio antes del valor)
+    int hash;             // Flag para '#' (en hexadecimal o octal, muestra prefijos como 0x, 0X, 0)
+} t_printf;
 
 /* valitions */
 int ft_validation(char c);
@@ -64,4 +65,9 @@ void	ft_pointer(size_t pointer, int *length, int *flag);
 /* • %x Imprime un número hexadecimal (base 16) en minúsculas.
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
 void	ft_hex(unsigned int nbr, int *length, char x, int *flag);
+
+void handle_char(t_printf *ft_flags, va_list args);
+void handle_string(t_printf *ft_flags, va_list args);
+void handle_integer(t_printf *ft_flags, va_list args);
+void ft_initialise_flags(t_printf *ft_flags);
 #endif

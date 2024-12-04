@@ -9,63 +9,91 @@
 /*   Updated: 2024/11/26 16:23:01 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/ft_printf.h"
+#include "../../include/ft_printf_bonus.h"
 
-/* struct bonus */
-ft_printf *ft_initialise_flags(ft_printf *ft_flags)                       
-{                       
-      ft_flags->width = 0;     
-      ft_flags->accuracy = 0;                        
-      ft_flags->zero = 0;                        
-      ft_flags->dot = 0;                        
-      ft_flags->dash = 0;                        
-      ft_flags->total_lenght = 0;                        
-      ft_flags->sign = 0;                        
-      ft_flags->is_zero = 0;                        
-      ft_flags->percen = 0;                        
-      ft_flags->space = 0;                        
-      return (ft_flags);                       
-}
-
-/* dejare el ft_printf para manejo de errores 
- * etc y llamar a las funciones finales */
-int	ft_printf(const char *str, ...)
+// Función principal ft_printf
+int ft_printf(const char *str, ...)
 {
-	int		i;
-	va_list	args;
-	int		length;
-	int		flag;
-	ft_printf *ft_flags;
-                       
-   ft_flags = (t_print *)malloc(sizeof(t_print));                        
-   if (!ft_flags)                         
-       return (-1);
-   ft_initialise_flags(ft_flags)
-	i = 0;
-	length = 0;
-	flag = 1;
-	va_start(ft_flags->args, str);
-	if (!*str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '%')
-		{
-			i++;
-			if (str[i])
-				if (ft_validation(str[i]) == 1)
-					is_flag(str[i], args, &length, &flag);
-				else
-					return (-1);
-			else
-				break ;
-		}
-		else
-			ft_putchar(str[i], &length, &flag);
-		if (flag == -1)
-			return (-1);
-		i++;
-	}
-	va_end(args);
-	return (length);
+    va_list args;
+    va_start(args, str);
+
+    t_printf *ft_flags = malloc(sizeof(t_printf));
+	if (!ft_flags)
+		return (NULL);
+    int total_printed = 0;  // Contador de caracteres impresos
+    while (*str)
+    {
+        if (*str == '%')  // Si encontramos un '%' en el stro
+        {
+            str++;  // Saltamos el '%'
+            ft_initialise_flags(&ft_flags);  // Inicializamos los flags
+
+            // Leer los flags (como '-', '0', '#', ' ', '+')
+            while (*str == '-' || *str == '0' || *str == '#' || *str == ' ' || *str == '+')
+            {
+                if (*str == '-')
+                    ft_flags.dash = 1;
+                else if (*str == '0')
+                    ft_flags.zero = 1;
+                else if (*str == '#')
+                    ft_flags.hash = 1;
+                else if (*str == ' ')
+                    ft_flags.space = 1;
+                else if (*str == '+')
+                    ft_flags.sign = 1;
+                str++;
+            }
+
+            // Leer el ancho (width)
+            while (*str >= '0' && *str <= '9')
+            {
+                ft_flags.width = ft_flags.width * 10 + (*str - '0');
+                str++;
+            }
+
+            // Leer la precisión (si está presente)
+            if (*str == '.')
+            {
+                ft_flags.dot = 1;
+                str++;
+                ft_flags.accuracy = 0;
+                while (*str >= '0' && *str <= '9')
+                {
+                    ft_flags.accuracy = ft_flags.accuracy * 10 + (*str - '0');
+                    str++;
+                }
+            }
+
+            // Validar el especificador con la función ft_validation
+            if (ft_validation(*str) == 1)
+            {
+                // Llamar a la función correspondiente según el tipo de especificador
+                if (*str == 'c')
+                    handle_char(&ft_flags, args);
+                else if (*str == 's')
+                    handle_string(&ft_flags, args);
+                else if (*str == 'd' || *str == 'i' || *str == 'u')
+                    handle_integer(&ft_flags, args);
+                else if (*str == '%')
+                    handle_char(&ft_flags, args);  // Para manejar el '%' como un carácter literal
+                total_printed += ft_flags.width;  // Incrementar el contador de caracteres impresos
+            }
+            else
+            {
+                // Si el especificador no es válido, solo lo imprimimos
+                write(1, str - 1, 1);
+                total_printed++;
+            }
+        }
+        else
+        {
+            // Imprimir caracteres normales fuera de los especificadores
+            write(1, str, 1);
+            total_printed++;
+        }
+        str++;
+    }
+
+    va_end(args);
+    return total_printed;  // Retornar el total de caracteres impresos
 }

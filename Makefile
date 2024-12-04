@@ -1,7 +1,13 @@
 NAME = libftprintf.a
 
+#Mandatory
 SRC = src/mandatory/ft_printf.c src/mandatory/ft_flags.c src/mandatory/ft_printf_utils.c
 OBJS = $(SRC:.c=.o)
+
+#Bonus
+BSRC = src/bonus/ft_printf_bonus.c src/bonus/ft_flags_bonus.c src/bonus/ft_printf_utils_bonus.c src/bonus/bonus.c
+BOBJS = $(BSRC:.c=.o)
+
 HEADER = ft_printf.h
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -15,9 +21,29 @@ YELLOW  = \033[33m
 BLUE    = \033[34m
 RESET   = \033[0m
 
+ifdef BONUS
+	OBJECTS = $(OBJS) $(BOBJS)
+else
+	OBJECTS = $(OBJS)
+endif
+
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJECTS)
+	@echo "$(GREEN)Compilando...$(RESET)"
+	ar rsc $(NAME) $?
+	ranlib $(NAME)
+	@echo "$(BLUE)"
+	@echo "$(YELLOW)           (__)\           $(RESET)"
+	@echo "$(YELLOW)           (oo)\\________  $(RESET)"
+	@echo "$(RESET)           /|| \\        \\ $(RESET)"
+	@echo "$(RESET)              ||------w | $(RESET)"
+	@echo "$(RESET)              ||       || $(RESET)"
+	@echo "$(YELLOW)THE COW MAKES MUUUUUUUUUU!$(RESET)"
+	@echo "$(RESET)"
+
+bonus: $(OBJS) $(BOBJS)
+#@$(MAKE) BONUS=42 --no-print-directory
 	@echo "$(GREEN)Compilando...$(RESET)"
 	ar rsc $(NAME) $?
 	ranlib $(NAME)
