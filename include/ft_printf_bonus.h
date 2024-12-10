@@ -23,7 +23,7 @@
 typedef struct s_printf
 {
     int width;            // Ancho mínimo (field width)
-    int accuracy;         // Precisión (si está presente)
+    int accuracy;          // Precisión (si está presente)
     int zero;             // Flag para '0' (rellenar con ceros)
     int dot;              // Flag para '.' (indica la precisión)
     int dash;             // Flag para '-' (alineación a la izquierda)
