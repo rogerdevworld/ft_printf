@@ -1,4 +1,4 @@
-name: Norminette Check
+name: CI Checks
 
 on:
   push:
@@ -26,19 +26,6 @@ jobs:
       - name: Run Norminette
         run: norminette
 
-name: FT_PRINTF Tests
-
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
-
-jobs:
   ft_printf_tester:
     name: Run FT_PRINTF Tester
     runs-on: ubuntu-latest
@@ -52,4 +39,4 @@ jobs:
       - name: Run FT_PRINTF Tests
         run: |
           cd printfTester
-          make m
+          make a
