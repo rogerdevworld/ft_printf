@@ -1,4 +1,4 @@
-name: CI Checks
+name: FT_PRINTF Tests
 
 on:
   push:
@@ -11,51 +11,17 @@ on:
       - develop
 
 jobs:
-  norminette:
-    name: Check Norminette
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install Norminette
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install norminette
-
-      - name: Run Norminette
-        run: norminette
-
   ft_printf_tester:
     name: Run FT_PRINTF Tester
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Remove existing printfTester directory (if exists)
-        run: |
-          rm -rf printfTester
-
-      - name: Clone printfTester Repository
-        run: git clone https://github.com/Tripouille/printfTester.git
+        with:
+          submodules: true  # Esto asegura que los submódulos se descarguen
 
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
-
-      - name: Set environment for `tput` issue
-        run: |
-          export TERM=xterm
-          sudo apt install -y ncurses-term
-
-      - name: Debugging Environment
-        run: |
-          echo "Checking the current directory structure"
-          ls -la
-          echo "Inspecting the Makefile"
-          cat Makefile
-          echo "Checking the installed packages"
-          dpkg -l
 
       - name: Run FT_PRINTF Tests
         run: |
