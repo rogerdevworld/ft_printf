@@ -36,7 +36,10 @@ jobs:
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
 
+      - name: Clone printfTester
+        run: git clone https://github.com/Tripouille/printfTester.git
+
       - name: Run FT_PRINTF Tests
         run: |
           cd printfTester
-          make a
+          make m
