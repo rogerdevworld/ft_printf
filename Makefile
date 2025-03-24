@@ -43,7 +43,7 @@ $(NAME): $(OBJECTS)
 	@echo "$(YELLOW)THE COW MAKES MUUUUUUUUUU!$(RESET)"
 	@echo "$(RESET)"
 
-bonus: $(OBJS) $(BOBJS)
+bonus: $(BOBJS)
 #@$(MAKE) BONUS=42 --no-print-directory
 	@echo "$(GREEN)Compilando...$(RESET)"
 	ar rsc $(NAME) $?
