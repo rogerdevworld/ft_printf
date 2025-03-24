@@ -54,7 +54,9 @@ jobs:
       - name: Run FT_PRINTF Tests
         run: |
           make
-          ls -la
           cd printfTester
-          ls -la
+          make m
+          cd ..
+          make bonus
+          cd printfTester
           make a
