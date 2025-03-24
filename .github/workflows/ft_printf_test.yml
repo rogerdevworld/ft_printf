@@ -48,6 +48,9 @@ jobs:
           export TERM=xterm
           sudo apt install -y ncurses-term
 
+      - name: Disable `tput` command
+        run: echo "alias tput='true'" >> ~/.bashrc
+
       - name: Run FT_PRINTF Tests
         run: |
           cd printfTester
