@@ -56,4 +56,4 @@ jobs:
           ls -la
           cd printfTester
           ls -la
-          make m
+          make a
