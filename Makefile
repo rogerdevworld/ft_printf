@@ -5,10 +5,9 @@ SRC = src/mandatory/ft_printf.c src/mandatory/ft_flags.c src/mandatory/ft_printf
 OBJS = $(SRC:.c=.o)
 
 #Bonus
-BSRC = src/bonus/ft_printf_bonus.c src/bonus/ft_flags_bonus.c src/bonus/ft_printf_utils_bonus.c src/bonus/bonus.c
+BSRC = src/bonus/ft_printf_bonus.c
 BOBJS = $(BSRC:.c=.o)
 
-HEADER = ft_printf.h
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
@@ -22,8 +21,10 @@ BLUE    = \033[34m
 RESET   = \033[0m
 
 ifdef BONUS
-	OBJECTS = $(OBJS) $(BOBJS)
+	HEADER = ft_printf_bonus.h
+	OBJECTS = $(BOBJS)
 else
+	HEADER = ft_printf.h
 	OBJECTS = $(OBJS)
 endif
 
