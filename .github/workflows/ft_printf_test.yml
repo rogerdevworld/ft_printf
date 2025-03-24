@@ -33,11 +33,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Remove existing printfTester directory (if exists)
+        run: |
+          rm -rf printfTester
+
+      - name: Clone printfTester Repository
+        run: git clone https://github.com/Tripouille/printfTester.git
+
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
 
-      - name: Clone printfTester
-        run: git clone https://github.com/Tripouille/printfTester.git
+      - name: Set TERM variable to xterm
+        run: echo "export TERM=xterm" >> $GITHUB_ENV
 
       - name: Run FT_PRINTF Tests
         run: |
