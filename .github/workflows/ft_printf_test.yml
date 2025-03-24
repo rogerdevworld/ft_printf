@@ -43,8 +43,10 @@ jobs:
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
 
-      - name: Set TERM variable to xterm
-        run: echo "export TERM=xterm" >> $GITHUB_ENV
+      - name: Set environment for `tput` issue
+        run: |
+          export TERM=xterm
+          sudo apt install -y ncurses-utils
 
       - name: Run FT_PRINTF Tests
         run: |
