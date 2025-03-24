@@ -62,7 +62,7 @@ bonus: $(OBJS) $(BOBJS)
 
 clean:
 	@echo "$(GREEN)Delete .o, wait..$(RESET)"
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(BOBJS)
 
 fclean: clean
 	@echo "$(GREEN)Delete... all$(RESET)"
