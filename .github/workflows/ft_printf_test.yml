@@ -46,7 +46,7 @@ jobs:
       - name: Set environment for `tput` issue
         run: |
           export TERM=xterm
-          sudo apt install -y ncurses-utils
+          sudo apt install -y ncurses-term
 
       - name: Run FT_PRINTF Tests
         run: |
