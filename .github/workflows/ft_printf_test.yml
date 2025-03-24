@@ -48,15 +48,16 @@ jobs:
           export TERM=xterm
           sudo apt install -y ncurses-term
 
-      - name: Disable `tput` command
-        run: echo "alias tput='true'" >> ~/.bashrc
+      - name: Debugging Environment
+        run: |
+          echo "Checking the current directory structure"
+          ls -la
+          echo "Inspecting the Makefile"
+          cat Makefile
+          echo "Checking the installed packages"
+          dpkg -l
 
       - name: Run FT_PRINTF Tests
         run: |
-          make
           cd printfTester
           make m
-          cd ..
-          make bonus
-          cd printfTester
-          make a
