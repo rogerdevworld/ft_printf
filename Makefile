@@ -27,15 +27,13 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf
 
+	OBJECTS = $(OBJS)
+	HEADER = ./include/ft_printf.h
 # Condicional para determinar si se compilan los bonus
 ifdef BONUS
 	OBJECTS = $(BOBJS)
 	HEADER = ./include/ft_printf_bonus.h
 	SRC_DIR = ./src/bonus/
-else
-	OBJECTS = $(OBJS)
-	HEADER = ./include/ft_printf.h
-	SRC_DIR = ./src/mandatory/
 endif
 
 # Colores para la terminal
@@ -70,8 +68,9 @@ $(NAME): $(OBJECTS) $(HEADER)
 	@echo "$(RESET)"
 
 # Regla para compilar el bonus
-bonus: BONUS = 1
-bonus: $(NAME)
+#bonus: 
+bonus:
+	@$(MAKE) BONUS=42 --no-print-directory
 	@echo "$(GREEN)Compilando bonus...$(RESET)"
 
 # Limpieza de archivos objeto
