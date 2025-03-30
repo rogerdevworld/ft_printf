@@ -23,16 +23,26 @@ jobs:
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
 
+      - name: Run FT_PRINTF Tests
+        run: |
+          cd printfTester
+          make && make bonus && make test
+
+  norminette_check:
+    name: Run Norminette
+    runs-on: ubuntu-latest
+    needs: ft_printf_tester  # Esto asegura que la ejecución de Norminette dependa de que el trabajo de FT_PRINTF Tests haya terminado
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # Asegura que los submódulos se descarguen
+
       - name: Install Norminette
         run: |
           git clone https://github.com/42School/norminette.git
           cd norminette
           sudo make install
-
-      - name: Run FT_PRINTF Tests
-        run: |
-          cd printfTester
-          make && make bonus && make test
 
       - name: Run Norminette
         run: |
