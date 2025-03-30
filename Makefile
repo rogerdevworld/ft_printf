@@ -23,6 +23,9 @@ BSRC_DIR = ./src/bonus/
 BSRCS =	$(BSRC_DIR)ft_printf_bonus.c
 BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
+# --- Tester --- #
+PRINTFTESTER = ./printfTester
+
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf
@@ -72,6 +75,14 @@ $(NAME): $(OBJECTS) $(HEADER)
 bonus:
 	@$(MAKE) BONUS=42 --no-print-directory
 	@echo "$(GREEN)Compilando bonus...$(RESET)"
+
+test: 
+	@echo "$(GREEN)Compilando Test Mandatory...$(RESET)"
+	@make -C m$(PRINTFTESTER)
+	@echo "$(GREEN)Compilando Test Bonus...$(RESET)"
+	@make -C b$(PRINTFTESTER)
+	@echo "$(GREEN)Compilando Test Mandatory (+Bonus)...$(RESET)"
+	@make -C a$(PRINTFTESTER)
 
 # Limpieza de archivos objeto
 clean:
