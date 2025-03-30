@@ -23,8 +23,17 @@ jobs:
       - name: Install Required Packages
         run: sudo apt update && sudo apt install -y make gcc
 
+      - name: Install Norminette
+        run: |
+          git clone https://github.com/42School/norminette.git
+          cd norminette
+          sudo make install
+
       - name: Run FT_PRINTF Tests
         run: |
           cd printfTester
-          make && make bonus && make m && make b && make a
+          make && make bonus && make test
 
+      - name: Run Norminette
+        run: |
+          norminette src/
