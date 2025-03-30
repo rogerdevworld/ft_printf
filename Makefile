@@ -26,12 +26,13 @@ BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 # --- Tester --- #
 PRINTFTESTER = ./printfTester
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf
 
-	OBJECTS = $(OBJS)
-	HEADER = ./include/ft_printf.h
+OBJECTS = $(OBJS)
+HEADER = ./include/ft_printf.h
+
 # Condicional para determinar si se compilan los bonus
 ifdef BONUS
 	OBJECTS = $(BOBJS)
@@ -76,13 +77,21 @@ bonus:
 	@$(MAKE) BONUS=42 --no-print-directory
 	@echo "$(GREEN)Compilando bonus...$(RESET)"
 
-test: 
-	@echo "$(GREEN)Compilando Test Mandatory...$(RESET)"
-	@make -C m$(PRINTFTESTER)
-	@echo "$(GREEN)Compilando Test Bonus...$(RESET)"
-	@make -C b$(PRINTFTESTER)
-	@echo "$(GREEN)Compilando Test Mandatory (+Bonus)...$(RESET)"
-	@make -C a$(PRINTFTESTER)
+test:
+	@if [ ! -d "$(PRINTFTESTER)" ]; then \
+		echo "$(RED)La carpeta $(PRINTFTESTER) no existe. Descargando tester...$(RESET)"; \
+		git clone https://github.com/Tripouille/printfTester.git $(PRINTFTESTER); \
+	fi
+	@echo "$(GREEN)Test Mandatory...$(RESET)"
+	@make -C $(PRINTFTESTER) m
+
+	make fclean
+
+	@echo "$(GREEN)Test Bonus...$(RESET)"
+	@make -C $(PRINTFTESTER) b
+
+	@echo "$(GREEN)Test Mandatory (+Bonus)...$(RESET)"
+	@make -C $(PRINTFTESTER) a
 
 # Limpieza de archivos objeto
 clean:
@@ -96,8 +105,9 @@ fclean: clean
 
 	# Eliminar los objetos generados para bonus si están presentes
 	$(RM) $(OBJ_DIR)/ft_printf_bonus.o
-	$(RM) $(OBJ_DIR)/ft_printf_utils_bonus.o
-	$(RM) $(OBJ_DIR)/ft_flags_bonus.o
+
+	# Eliminar tester
+#$(RM) $(PRINTFTESTER)
 
 # Regeneración completa
 re: fclean all
