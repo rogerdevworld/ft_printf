@@ -26,4 +26,5 @@ jobs:
       - name: Run FT_PRINTF Tests
         run: |
           cd printfTester
-          make m
+          make && make bonus && make m && make b && make a
+
