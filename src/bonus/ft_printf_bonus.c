@@ -138,18 +138,14 @@ void	handle_string(t_printf *ft_flags, va_list args, int *length)
 	if (!str)
 		str = "(null)";
 	len = ft_strlen(str);
-	// Precisión limita la longitud máxima a imprimir
 	if (ft_flags->dot && ft_flags->accuracy < len)
 		len = ft_flags->accuracy;
 	padding = ft_flags->width - len;
-	// Imprimir padding izquierdo (solo si no hay alineación izquierda)
 	if (!ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
-	// Imprimir el string (hasta la longitud determinada)
 	write(1, str, len);
 	(*length) += len;
-	// Imprimir padding derecho (para alineación izquierda)
 	if (ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
@@ -170,18 +166,15 @@ void	handle_integer(t_printf *ft_flags, va_list args, int *length)
 	abs_num = is_negative ? -num : num;
 	num_len = ft_numlen_base(abs_num, 10);
 	zeros = 0;
-	// Handle precision
 	if (ft_flags->dot)
 	{
 		zeros = ft_flags->accuracy - num_len;
 		if (zeros < 0)
 			zeros = 0;
-		// Zero flag is ignored when precision is specified
 		ft_flags->zero = 0;
 	}
 	else if (ft_flags->zero && !ft_flags->dash)
 	{
-		// Zero padding only applies when no precision and right-aligned
 		zeros = ft_flags->width - num_len;
 		if (is_negative || ft_flags->sign || ft_flags->space)
 			zeros--;
@@ -191,9 +184,7 @@ void	handle_integer(t_printf *ft_flags, va_list args, int *length)
 	total_len = num_len + zeros;
 	if (is_negative || ft_flags->sign || ft_flags->space)
 		total_len++;
-	// Calculate padding (spaces)
 	padding = ft_flags->width - total_len;
-	// Special case: zero with precision 0
 	if (abs_num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
 	{
 		total_len = 0;
@@ -214,24 +205,19 @@ void	handle_integer(t_printf *ft_flags, va_list args, int *length)
 				ft_putchar(' ', length);
 		return ;
 	}
-	// Left padding (spaces)
 	if (!ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
-	// Sign
 	if (is_negative)
 		ft_putchar('-', length);
 	else if (ft_flags->sign)
 		ft_putchar('+', length);
 	else if (ft_flags->space)
 		ft_putchar(' ', length);
-	// Zero padding
 	while (zeros-- > 0)
 		ft_putchar('0', length);
-	// Number itself
 	if (abs_num != 0 || !ft_flags->dot || ft_flags->accuracy != 0)
 		ft_putnbr_base(abs_num, 10, 0, length);
-	// Right padding
 	if (ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
@@ -239,8 +225,12 @@ void	handle_integer(t_printf *ft_flags, va_list args, int *length)
 
 void	ft_putnbr_base(unsigned long n, int base, int uppercase, int *length)
 {
-	const char	*digits = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
+	const char	*digits;
 
+	if (uppercase)
+		digits = "0123456789ABCDEF";
+	else
+		digits = "0123456789abcdef";
 	if (n >= (unsigned long)base)
 		ft_putnbr_base(n / base, base, uppercase, length);
 	ft_putchar(digits[n % base], length);
@@ -256,42 +246,33 @@ void	handle_unsigned(t_printf *ft_flags, va_list args, int *length)
 	num = va_arg(args, unsigned int);
 	num_len = ft_numlen_base(num, 10);
 	zeros = 0;
-	// Handle precision
 	if (ft_flags->dot)
 	{
 		zeros = ft_flags->accuracy - num_len;
 		if (zeros < 0)
 			zeros = 0;
-		// Zero flag is ignored when precision is specified
 		ft_flags->zero = 0;
 	}
 	else if (ft_flags->zero && !ft_flags->dash)
 	{
-		// Zero padding only applies when no precision and right-aligned
 		zeros = ft_flags->width - num_len;
 		if (zeros < 0)
 			zeros = 0;
 	}
-	// Calculate padding (spaces)
 	padding = ft_flags->width - num_len - zeros;
-	// Special case: zero with precision 0
 	if (num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
 	{
 		while (padding-- > 0)
 			ft_putchar(' ', length);
 		return ;
 	}
-	// Left padding (spaces)
 	if (!ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
-	// Zero padding
 	while (zeros-- > 0)
 		ft_putchar('0', length);
-	// Number itself
 	if (num != 0 || !ft_flags->dot || ft_flags->accuracy != 0)
 		ft_putnbr_base(num, 10, 0, length);
-	// Right padding
 	if (ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
@@ -340,51 +321,40 @@ void	handle_hex(t_printf *ft_flags, va_list args, int *length, char spec)
 	num_len = ft_numlen_base(num, 16);
 	zeros = 0;
 	prefix_len = 0;
-	// Handle hash flag (0x or 0X prefix)
 	if (ft_flags->hash && num != 0)
 		prefix_len = 2;
-	// Handle precision
 	if (ft_flags->dot)
 	{
 		zeros = ft_flags->accuracy - num_len;
 		if (zeros < 0)
 			zeros = 0;
-		// Zero flag is ignored when precision is specified
 		ft_flags->zero = 0;
 	}
 	else if (ft_flags->zero && !ft_flags->dash)
 	{
-		// Zero padding only applies when no precision and right-aligned
 		zeros = ft_flags->width - num_len - prefix_len;
 		if (zeros < 0)
 			zeros = 0;
 	}
-	// Calculate padding (spaces)
 	padding = ft_flags->width - num_len - zeros - prefix_len;
-	// Special case: zero with precision 0
 	if (num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
 	{
 		while (padding-- > 0)
 			ft_putchar(' ', length);
 		return ;
 	}
-	// Left padding (spaces)
 	if (!ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
-	// Prefix (0x or 0X)
 	if (ft_flags->hash && num != 0)
 	{
 		ft_putchar('0', length);
 		ft_putchar(spec, length);
 	}
-	// Zero padding
 	while (zeros-- > 0)
 		ft_putchar('0', length);
-	// Number itself
 	if (num != 0 || !ft_flags->dot || ft_flags->accuracy != 0)
 		ft_putnbr_base(num, 16, (spec == 'X'), length);
-	// Right padding
 	if (ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
