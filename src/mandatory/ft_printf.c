@@ -6,10 +6,10 @@
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:06:47 by rmarrero          #+#    #+#             */
-/*   Updated: 2025/01/24 16:39:25 by rmarrero         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:23:01 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/printf.h"
+#include "../../include/ft_printf.h"
 
 /* dejare el ft_printf para manejo de errores
  * etc y llamar a las funciones finales */
@@ -28,7 +28,7 @@ int	ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%' && str[++i])
 		{
-			if (ft_validation(str[i]) == 1)
+			if (ft_validation(str[i]))
 				is_flag(str[i], args, &length, &flag);
 			else
 				return (-1);
