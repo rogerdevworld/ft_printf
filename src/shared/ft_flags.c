@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/shared.h"
+#include "../../include/ft_printf.h"
+#include "../../include/ft_printf_bonus.h"
 
 int	ft_validation(char c)
 {

@@ -103,11 +103,11 @@ fclean: clean
 	@echo "$(GREEN)Eliminando ejecutable y librerías...$(RESET)"
 	$(RM) -f $(NAME)
 
-	# Eliminar los objetos generados para bonus si están presentes
+	@echo "$(GREEN)clean bonus$(RESET)"
 	$(RM) $(OBJ_DIR)/ft_printf_bonus.o
 
-	# Eliminar tester
-#$(RM) $(PRINTFTESTER)
+	@echo "$(GREEN)clean tester$(RESET)"
+	$(RM) $(PRINTFTESTER)
 
 # Regeneración completa
 re: fclean all

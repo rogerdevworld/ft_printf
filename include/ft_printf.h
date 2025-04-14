@@ -17,9 +17,8 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include "shared.h"
 
-/* valitions */
-int ft_validation(char c);
 /* main funtion*/
 int		ft_printf(const char *str, ...);
 

@@ -9,8 +9,8 @@
 /*   Updated: 2024/10/22 14:35:05 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef SHARED_H
+# define SHARED_H
 
 /* valitions */
 int		ft_validation(char c);
