@@ -11,17 +11,62 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
-void	ft_initialise_flags(t_printf *ft_flags)
+int	ft_numlen(long num)
 {
-	ft_flags->width = 0;
-	ft_flags->accuracy = -1;
-	ft_flags->zero = 0;
-	ft_flags->dot = 0;
-	ft_flags->dash = 0;
-	ft_flags->total_length = 0;
-	ft_flags->sign = 0;
-	ft_flags->is_zero = 0;
-	ft_flags->percent = 0;
-	ft_flags->space = 0;
-	ft_flags->hash = 0;
+	int	len;
+
+	len = 0;
+	if (num == 0)
+		return (1);
+	if (num < 0)
+	{
+		len++;
+		num = -num;
+	}
+	while (num)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
+}
+
+void	ft_putnbr(long n, int *length)
+{
+	if (n < 0)
+	{
+		ft_putchar('-', length);
+		n = -n;
+	}
+	if (n >= 10)
+		ft_putnbr(n / 10, length);
+	ft_putchar(n % 10 + '0', length);
+}
+
+int	ft_numlen_base(unsigned long num, int base)
+{
+	int len;
+
+	len = 0;
+	if (num == 0)
+		return (1);
+	while (num)
+	{
+		len++;
+		num /= base;
+	}
+	return (len);
+}
+
+void	ft_putnbr_base(unsigned long n, int base, int uppercase, int *length)
+{
+	const char	*digits;
+
+	if (uppercase)
+		digits = "0123456789ABCDEF";
+	else
+		digits = "0123456789abcdef";
+	if (n >= (unsigned long)base)
+		ft_putnbr_base(n / base, base, uppercase, length);
+	ft_putchar(digits[n % base], length);
 }

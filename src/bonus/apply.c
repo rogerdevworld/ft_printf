@@ -11,17 +11,45 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
-void	ft_initialise_flags(t_printf *ft_flags)
+void	ft_apply_flags(const char **str, t_printf *ft_flags)
 {
-	ft_flags->width = 0;
-	ft_flags->accuracy = -1;
-	ft_flags->zero = 0;
-	ft_flags->dot = 0;
-	ft_flags->dash = 0;
-	ft_flags->total_length = 0;
-	ft_flags->sign = 0;
-	ft_flags->is_zero = 0;
-	ft_flags->percent = 0;
-	ft_flags->space = 0;
-	ft_flags->hash = 0;
+	while (**str == '-' || **str == '0' || **str == '#' || **str == ' '
+		|| **str == '+')
+	{
+		if (**str == '-')
+			ft_flags->dash = 1;
+		else if (**str == '0')
+			ft_flags->zero = 1;
+		else if (**str == '#')
+			ft_flags->hash = 1;
+		else if (**str == ' ')
+			ft_flags->space = 1;
+		else if (**str == '+')
+			ft_flags->sign = 1;
+		(*str)++;
+	}
+}
+
+void	ft_apply_width(const char **str, t_printf *ft_flags)
+{
+	while (ft_isdigit(**str))
+	{
+		ft_flags->width = ft_flags->width * 10 + (**str - '0');
+		(*str)++;
+	}
+}
+
+void	ft_apply_precision(const char **str, t_printf *ft_flags)
+{
+	if (**str == '.')
+	{
+		ft_flags->dot = 1;
+		(*str)++;
+		ft_flags->accuracy = 0;
+		while (ft_isdigit(**str))
+		{
+			ft_flags->accuracy = ft_flags->accuracy * 10 + (**str - '0');
+			(*str)++;
+		}
+	}
 }
