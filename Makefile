@@ -10,17 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
+# --- Shared --- #
+SHARED_DIR = ./src/shared/
+OBJ_DIR = ./obj
+
+SHARED_SRCS = $(SHARED_DIR)ft_validation.c
+SHARED_OBJS = $(SHARED_SRCS:$(SHARED_DIR)%.c=$(OBJ_DIR)/%.o)
+
 # --- Mandatory --- #
 NAME = libftprintf.a
 SRC_DIR = ./src/mandatory/
-OBJ_DIR = ./obj
+
 
 SRCS =	$(SRC_DIR)ft_printf.c $(SRC_DIR)ft_printf_utils.c $(SRC_DIR)ft_flags.c
 OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
 # --- Bonus --- #
 BSRC_DIR = ./src/bonus/
-BSRCS =	$(BSRC_DIR)ft_printf_bonus.c
+BSRCS =	$(BSRC_DIR)ft_printf_bonus.c $(BSRC_DIR)ft_init.c $(BSRC_DIR)ft_apply.c $(BSRC_DIR)ft_utils.c 
 BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
 # --- Tester --- #
@@ -30,12 +37,12 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -I./include
 RM = rm -rf
 
-OBJECTS = $(OBJS)
+OBJECTS = $(OBJS) $(SHARED_OBJS)
 HEADER = ./include/ft_printf.h
 
 # Condicional para determinar si se compilan los bonus
 ifdef BONUS
-	OBJECTS = $(BOBJS)
+	OBJECTS = $(BOBJS) $(SHARED_OBJS)
 	HEADER = ./include/ft_printf_bonus.h
 	SRC_DIR = ./src/bonus/
 endif
@@ -47,8 +54,19 @@ YELLOW  = \033[33m
 BLUE    = \033[34m
 RESET   = \033[0m
 
+# -- libft -- #
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+libft:
+	@if [ ! -d "$(LIBFT_DIR)" ]; then \
+		echo "$(GREEN)Clonando libft...$(RESET)"; \
+		git clone https://github.com/rogerdevworld/libft.git $(LIBFT_DIR); \
+	fi
+	@$(MAKE) -C $(LIBFT_DIR)
+
 # Regla principal
-all: $(NAME)
+all: libft $(NAME)
 
 # Asegurar que el directorio obj existe
 $(OBJ_DIR):
@@ -58,10 +76,13 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(OBJ_DIR)/%.o: $(SHARED_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # Creación de la librería estática
-$(NAME): $(OBJECTS) $(HEADER)
+$(NAME): $(OBJECTS) $(HEADER) $(LIBFT)
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
-	ar rsc $(NAME) $(OBJECTS)
+	ar rsc $(NAME) $(OBJECTS) $(LIBFT)
 	@echo "$(BLUE)"
 	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
 	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
@@ -74,7 +95,7 @@ $(NAME): $(OBJECTS) $(HEADER)
 # Regla para compilar el bonus
 #bonus: 
 bonus:
-	@$(MAKE) BONUS=42 --no-print-directory
+	@$(MAKE) BONUS=42 all --no-print-directory
 	@echo "$(GREEN)Compilando bonus...$(RESET)"
 
 test:
@@ -82,10 +103,13 @@ test:
 		echo "$(RED)La carpeta $(PRINTFTESTER) no existe. Descargando tester...$(RESET)"; \
 		git clone https://github.com/Tripouille/printfTester.git $(PRINTFTESTER); \
 	fi
+
+	make 
+	make bonus
 	@echo "$(GREEN)Test Mandatory...$(RESET)"
 	@make -C $(PRINTFTESTER) m
 
-	make fclean
+	make clean
 
 	@echo "$(GREEN)Test Bonus...$(RESET)"
 	@make -C $(PRINTFTESTER) b
@@ -98,16 +122,25 @@ clean:
 	@echo "$(GREEN)Eliminando archivos objeto...$(RESET)"
 	$(RM) $(OBJ_DIR)
 
+	@echo "$(GREEN)make clean libft...$(RESET)"
+	@make -C $(LIBFT_DIR) clean
+
 # Limpieza total
 fclean: clean
 	@echo "$(GREEN)Eliminando ejecutable y librerías...$(RESET)"
 	$(RM) -f $(NAME)
 
 	@echo "$(GREEN)clean bonus$(RESET)"
-	$(RM) $(OBJ_DIR)/ft_printf_bonus.o
+	$(RM) $(OBJ_DIR)
 
 	@echo "$(GREEN)clean tester$(RESET)"
 	$(RM) $(PRINTFTESTER)
+
+	@echo "$(GREEN)make fclean libft...$(RESET)"
+	@make -C $(LIBFT_DIR) fclean
+
+	@echo "$(GREEN)make clean libft...$(RESET)"
+	$(RM) $(LIBFT_DIR)
 
 # Regeneración completa
 re: fclean all

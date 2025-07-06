@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "shared.h"
+# include "../libft/libft.h"
 
 typedef struct s_printf
 {
@@ -41,19 +42,20 @@ int		ft_printf(const char *str, ...);
 void	ft_initialise_flags(t_printf *ft_flags);
 
 /* Flag handlers */
-void	handle_char(t_printf *ft_flags, va_list args, int *length);
-void	handle_string(t_printf *ft_flags, va_list args, int *length);
-void	handle_integer(t_printf *ft_flags, va_list args, int *length);
-void	handle_pointer(t_printf *ft_flags, va_list args, int *length);
-void	handle_hex(t_printf *ft_flags, va_list args, int *length, char spec);
-void	handle_unsigned(t_printf *ft_flags, va_list args, int *length);
-void	handle_percent(t_printf *ft_flags, int *length);
+void	ft_char(t_printf *ft_flags, va_list args, int *length);
+void	ft_string(t_printf *ft_flags, va_list args, int *length);
+void	ft_integer(t_printf *ft_flags, va_list args, int *length);
+void	ft_pointer(t_printf *ft_flags, va_list args, int *length);
+void	ft_hex(t_printf *ft_flags, va_list args, int *length, char spec);
+void	ft_unsigned(t_printf *ft_flags, va_list args, int *length);
+void	ft_percent(t_printf *ft_flags, int *length);
 
-/* Utils */
-void	ft_putstr(char *str, int *length);
-void	ft_putchar(char c, int *length);
-int		ft_isdigit(int c);
-size_t	ft_strlen(const char *s);
+// -- apply -- //
+void	ft_apply_width(const char **str, t_printf *ft_flags);
+void	ft_apply_flags(const char **str, t_printf *ft_flags);
+void	ft_apply_precision(const char **str, t_printf *ft_flags);
+
+// -- Utils -- //
 int		ft_numlen(long num);
 void	ft_putnbr(long n, int *length);
 int		ft_numlen_base(unsigned long num, int base);
