@@ -12,13 +12,13 @@
 #ifndef FT_PRINTF_BONUS_H
 # define FT_PRINTF_BONUS_H
 
+# include "../libft/libft.h"
+# include "shared.h"
 # include <stdarg.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "shared.h"
-# include "../libft/libft.h"
 
 typedef struct s_printf
 {
@@ -51,7 +51,7 @@ void	ft_unsigned(t_printf *ft_flags, va_list args, int *length);
 void	ft_percent(t_printf *ft_flags, int *length);
 
 // -- apply -- //
-void	ft_apply_width(const char **str, t_printf *ft_flags);
+void	width(const char **str, t_printf *ft_flags);
 void	ft_apply_flags(const char **str, t_printf *ft_flags);
 void	ft_apply_precision(const char **str, t_printf *ft_flags);
 

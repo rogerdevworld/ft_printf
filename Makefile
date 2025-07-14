@@ -27,7 +27,12 @@ OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
 # --- Bonus --- #
 BSRC_DIR = ./src/bonus/
-BSRCS =	$(BSRC_DIR)ft_printf_bonus.c $(BSRC_DIR)ft_init.c $(BSRC_DIR)ft_apply.c $(BSRC_DIR)ft_utils.c 
+BSRCS =	$(BSRC_DIR)ft_printf_bonus.c \
+		$(BSRC_DIR)ft_init.c $(BSRC_DIR)ft_apply.c \
+		$(BSRC_DIR)ft_utils.c $(BSRC_DIR)ft_hex.c $(BSRC_DIR)ft_integer.c \
+		$(BSRC_DIR)ft_pointer.c $(BSRC_DIR)ft_string.c $(BSRC_DIR)utils.c $(BSRC_DIR)ft_char.c \
+		$(BSRC_DIR)ft_percent.c $(BSRC_DIR)ft_unsigned.c
+
 BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
 # --- Tester --- #
@@ -66,7 +71,7 @@ libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
 # Regla principal
-all: libft $(NAME)
+all: $(NAME)
 
 # Asegurar que el directorio obj existe
 $(OBJ_DIR):
@@ -80,7 +85,7 @@ $(OBJ_DIR)/%.o: $(SHARED_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Creación de la librería estática
-$(NAME): $(OBJECTS) $(HEADER) $(LIBFT)
+$(NAME): $(OBJECTS) $(HEADER) 
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
 	ar rsc $(NAME) $(OBJECTS) $(LIBFT)
 	@echo "$(BLUE)"

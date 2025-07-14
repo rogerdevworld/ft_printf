@@ -11,45 +11,26 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
-int	ft_printf(const char *str, ...)
+void	ft_char(t_printf *ft_flags, va_list args, int *length)
 {
-	va_list		args;
-	t_printf	ft_flags;
-	int			length;
+	char	c;
+	int		padding;
 
-	length = 0;
-	va_start(args, str);
-	while (*str)
+	c = (char)va_arg(args, int);
+	padding = ft_flags->width - 1;
+	if (ft_flags->dash)
 	{
-		if (*str == '%')
-		{
-			str++;
-			ft_initialise_flags(&ft_flags);
-			ft_apply_flags(&str, &ft_flags);
-			ft_apply_width(&str, &ft_flags);
-			ft_apply_precision(&str, &ft_flags);
-			if (ft_validation(*str))
-			{
-				if (*str == 'c')
-					ft_char(&ft_flags, args, &length);
-				else if (*str == 's')
-					ft_string(&ft_flags, args, &length);
-				else if (*str == 'd' || *str == 'i')
-					ft_integer(&ft_flags, args, &length);
-				else if (*str == 'u')
-					ft_unsigned(&ft_flags, args, &length);
-				else if (*str == 'p')
-					ft_pointer(&ft_flags, args, &length);
-				else if (*str == 'x' || *str == 'X')
-					ft_hex(&ft_flags, args, &length, *str);
-				else if (*str == '%')
-					ft_percent(&ft_flags, &length);
-				str++;
-			}
-		}
-		else
-			ft_putchar(*str++, &length);
+		ft_putchar(c, length);
+		while (padding-- > 0)
+			ft_putchar(' ', length);
 	}
-	va_end(args);
-	return (length);
+	else
+	{
+		while (padding-- > 0)
+			if (ft_flags->zero)
+				ft_putchar('0', length);
+			else
+			ft_putchar(' ', length);
+		ft_putchar(c, length);
+	}
 }
