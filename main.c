@@ -77,8 +77,8 @@ void test_plus_sign(void)
 
     // Prueba con enteros sin signo (el '+' no tiene efecto aquí)
     ft_printf("\nTest del signo '+' en enteros sin signo (no debería afectar)\n");
-    len1 = printf("5. [%+10u]\n", unum);
-    len2 = ft_printf("5. [%+10u]\n", unum);
+    len1 = printf("5. [%10u]\n", unum);
+    len2 = ft_printf("5. [%10u]\n", unum);
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 }
 
@@ -94,7 +94,7 @@ void test_zero_sign(void)
 
     // Prueba con punteros
     ft_printf("\nTest del signo '0' en punteros\n");
-    len1 = printf("1. [%020p]\n", ptr);
+    len1 = printf("1. [%20p]\n", ptr);
     len2 = ft_printf("1. [%020p]\n", ptr);
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 

@@ -12,8 +12,6 @@
 #ifndef FT_PRINTF_BONUS_H
 # define FT_PRINTF_BONUS_H
 
-# include "../libft/libft.h"
-//# include "shared.h"
 # include <stdarg.h>
 # include <stdint.h>
 # include <stdio.h>
@@ -64,5 +62,7 @@ void	ft_putnbr_base(unsigned long n, int base, int uppercase, int *length);
 int		ft_validation(char c);
 void	ft_putchar(char c, int *length);
 void	ft_putstr(char *str, int *length);
+size_t	ft_strlen(const char *str);
+int	ft_isdigit(int c);
 
 #endif

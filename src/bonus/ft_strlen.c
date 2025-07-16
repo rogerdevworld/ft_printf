@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 14:06:23 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/11/26 16:22:42 by rmarrero         ###   ########.fr       */
+/*   Created: 2024/09/12 17:36:43 by rmarrero          #+#    #+#             */
+/*   Updated: 2024/09/13 12:34:31 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/ft_printf_bonus.h"
+#include "../../include/ft_printf_bonus.h"
 
-int	ft_validation(char c)
+size_t	ft_strlen(const char *str)
 {
-	return (c == 'c' || c == 'i' || c == 's' || c == 'p' || c == 'u' || c == 'd'
-		|| c == 'x' || c == 'X' || c == '%');
-}
+	int	length;
 
-void	ft_putstr(char *str, int *length)
-{
-	if (!str)
-		return ;
-	while (*str)
-		ft_putchar(*str++, length);
+	length = 0;
+	while (str[length])
+		length++;
+	return (length);
 }
