@@ -6,88 +6,83 @@
 #    By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 12:58:52 by rmarrero          #+#    #+#              #
-#    Updated: 2025/02/17 11:55:01 by rmarrero         ###   ########.fr        #
+#    Updated: 2025/07/16 12:00:00 by rmarrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# --- Shared --- #
-SHARED_DIR = ./src/shared/
-OBJ_DIR = ./obj
+# ---------------------------- CONFIGURACIÓN -------------------------------- #
 
-SHARED_SRCS = $(SHARED_DIR)ft_validation.c
-SHARED_OBJS = $(SHARED_SRCS:$(SHARED_DIR)%.c=$(OBJ_DIR)/%.o)
+NAME        = libftprintf.a
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror -I./include
+RM          = rm -rf
+
+OBJ_DIR     = obj
+HEADER      = ./include/ft_printf.h
+HEADER_BONUS= ./include/ft_printf_bonus.h
+
+# --- Colores --- #
+GREEN   = \033[32m
+YELLOW  = \033[33m
+RED     = \033[31m
+BLUE    = \033[34m
+RESET   = \033[0m
+
+# --- Librería libft --- #
+LIBFT_DIR   = ./libft
+LIBFT       = $(LIBFT_DIR)/libft.a
+
+# ----------------------------- FUENTES ------------------------------------- #
+
+# --- Compartido --- #
+SHARED_DIR  = ./src/shared
+SHARED_SRCS = ft_validation.c
+SHARED_OBJS = $(addprefix $(OBJ_DIR)/, $(SHARED_SRCS:.c=.o))
 
 # --- Mandatory --- #
-NAME = libftprintf.a
-SRC_DIR = ./src/mandatory/
-
-
-SRCS =	$(SRC_DIR)ft_printf.c $(SRC_DIR)ft_printf_utils.c $(SRC_DIR)ft_flags.c
-OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
+SRC_DIR     = ./src/mandatory
+SRCS        = ft_printf.c ft_printf_utils.c ft_flags.c
+OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # --- Bonus --- #
-BSRC_DIR = ./src/bonus/
-BSRCS =	$(BSRC_DIR)ft_printf_bonus.c \
-		$(BSRC_DIR)ft_init.c $(BSRC_DIR)ft_apply.c \
-		$(BSRC_DIR)ft_utils.c $(BSRC_DIR)ft_hex.c $(BSRC_DIR)ft_integer.c \
-		$(BSRC_DIR)ft_pointer.c $(BSRC_DIR)ft_string.c $(BSRC_DIR)utils.c $(BSRC_DIR)ft_char.c \
-		$(BSRC_DIR)ft_percent.c $(BSRC_DIR)ft_unsigned.c
-
-BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
+BSRC_DIR    = ./src/bonus
+BSRCS       = ft_printf_bonus.c ft_init.c ft_apply.c ft_utils.c ft_hex.c \
+              ft_integer.c ft_pointer.c ft_string.c utils.c ft_char.c \
+              ft_percent.c ft_unsigned.c
+BOBJS       = $(addprefix $(OBJ_DIR)/, $(BSRCS:.c=.o))
 
 # --- Tester --- #
 PRINTFTESTER = ./printfTester
 
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -I./include
-RM = rm -rf
+# -------------------------- LÓGICA DE COMPILACIÓN -------------------------- #
 
-OBJECTS = $(OBJS) $(SHARED_OBJS)
-HEADER = ./include/ft_printf.h
-
-# Condicional para determinar si se compilan los bonus
 ifdef BONUS
-	OBJECTS = $(BOBJS) $(SHARED_OBJS)
-	HEADER = ./include/ft_printf_bonus.h
-	SRC_DIR = ./src/bonus/
+	SOURCES := $(BSRCS)
+	OBJECTS := $(BOBJS) $(SHARED_OBJS)
+	HEADER  := $(HEADER_BONUS)
+	SRC_DIR := $(BSRC_DIR)
+else
+	SOURCES := $(SRCS)
+	OBJECTS := $(OBJS) $(SHARED_OBJS)
+	SRC_DIR := ./src/mandatory
 endif
 
-# Colores para la terminal
-RED     = \033[31m
-GREEN   = \033[32m
-YELLOW  = \033[33m
-BLUE    = \033[34m
-RESET   = \033[0m
+# ---------------------------- REGLAS -------------------------------------- #
 
-# -- libft -- #
-LIBFT_DIR = ./libft
-LIBFT = $(LIBFT_DIR)/libft.a
+all: libft $(OBJ_DIR) $(NAME)
 
-libft:
-	@if [ ! -d "$(LIBFT_DIR)" ]; then \
-		echo "$(GREEN)Clonando libft...$(RESET)"; \
-		git clone https://github.com/rogerdevworld/libft.git $(LIBFT_DIR); \
-	fi
-	@$(MAKE) -C $(LIBFT_DIR)
-
-# Regla principal
-all: $(NAME)
-
-# Asegurar que el directorio obj existe
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $@
 
-# Compilación de archivos fuente a objetos (para cualquier fuente)
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(SHARED_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SHARED_DIR)/%.c $(HEADER)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Creación de la librería estática
-$(NAME): $(OBJECTS) $(HEADER) 
+$(NAME): $(OBJECTS)
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
-	ar rsc $(NAME) $(OBJECTS) $(LIBFT)
+	@ar rcs $(NAME) $(OBJECTS) $(LIBFT)
 	@echo "$(BLUE)"
 	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
 	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
@@ -95,59 +90,44 @@ $(NAME): $(OBJECTS) $(HEADER)
 	@echo "$(RESET)              ||------w | $(RESET)"
 	@echo "$(RESET)              ||       || $(RESET)"
 	@echo "$(YELLOW)THE COW MAKES MUUUUUUUUUU!$(RESET)"
-	@echo "$(RESET)"
 
-# Regla para compilar el bonus
-#bonus: 
 bonus:
-	@$(MAKE) BONUS=42 all --no-print-directory
+	@$(MAKE) BONUS=1 all --no-print-directory
 	@echo "$(GREEN)Compilando bonus...$(RESET)"
+
+libft:
+	@if [ ! -d "$(LIBFT_DIR)" ]; then \
+		echo "$(GREEN)Clonando libft...$(RESET)"; \
+		git clone https://github.com/rogerdevworld/libftall.git $(LIBFT_DIR); \
+	fi
+	@$(MAKE) -C $(LIBFT_DIR)
 
 test:
 	@if [ ! -d "$(PRINTFTESTER)" ]; then \
-		echo "$(RED)La carpeta $(PRINTFTESTER) no existe. Descargando tester...$(RESET)"; \
+		echo "$(RED)Descargando tester...$(RESET)"; \
 		git clone https://github.com/Tripouille/printfTester.git $(PRINTFTESTER); \
 	fi
-
-	make 
-	make bonus
+	@$(MAKE)
+	@$(MAKE) bonus
 	@echo "$(GREEN)Test Mandatory...$(RESET)"
 	@make -C $(PRINTFTESTER) m
-
-	make clean
-
+	@$(MAKE) clean
 	@echo "$(GREEN)Test Bonus...$(RESET)"
 	@make -C $(PRINTFTESTER) b
-
-	@echo "$(GREEN)Test Mandatory (+Bonus)...$(RESET)"
+	@echo "$(GREEN)Test Mandatory + Bonus...$(RESET)"
 	@make -C $(PRINTFTESTER) a
 
-# Limpieza de archivos objeto
 clean:
-	@echo "$(GREEN)Eliminando archivos objeto...$(RESET)"
-	$(RM) $(OBJ_DIR)
-
-	@echo "$(GREEN)make clean libft...$(RESET)"
+	@echo "$(GREEN)Limpiando objetos...$(RESET)"
+	@$(RM) $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 
-# Limpieza total
 fclean: clean
-	@echo "$(GREEN)Eliminando ejecutable y librerías...$(RESET)"
-	$(RM) -f $(NAME)
-
-	@echo "$(GREEN)clean bonus$(RESET)"
-	$(RM) $(OBJ_DIR)
-
-	@echo "$(GREEN)clean tester$(RESET)"
-	$(RM) $(PRINTFTESTER)
-
-	@echo "$(GREEN)make fclean libft...$(RESET)"
+	@echo "$(GREEN)Limpiando ejecutable y tester...$(RESET)"
+	@$(RM) $(NAME) $(PRINTFTESTER)
 	@make -C $(LIBFT_DIR) fclean
+	@$(RM) $(LIBFT_DIR)
 
-	@echo "$(GREEN)make clean libft...$(RESET)"
-	$(RM) $(LIBFT_DIR)
-
-# Regeneración completa
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus libft test
