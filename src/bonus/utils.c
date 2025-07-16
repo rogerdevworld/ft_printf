@@ -70,3 +70,9 @@ void	ft_putnbr_base(unsigned long n, int base, int uppercase, int *length)
 		ft_putnbr_base(n / base, base, uppercase, length);
 	ft_putchar(digits[n % base], length);
 }
+
+void	ft_putchar(char c, int *length)
+{
+	write(1, &c, 1);
+	(*length)++;
+}

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shared.h                                           :+:      :+:    :+:   */
+/*   ft_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 14:15:26 by rmarrero          #+#    #+#             */
-/*   Updated: 2024/10/22 14:35:05 by rmarrero         ###   ########.fr       */
+/*   Created: 2024/10/22 14:06:23 by rmarrero          #+#    #+#             */
+/*   Updated: 2024/11/26 16:22:42 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef SHARED_H
-# define SHARED_H
+#include "../include/ft_printf_bonus.h"
 
-/* valitions */
-int		ft_validation(char c);
-
-#endif
+int	ft_validation(char c)
+{
+	return (c == 'c' || c == 'i' || c == 's' || c == 'p' || c == 'u' || c == 'd'
+		|| c == 'x' || c == 'X' || c == '%');
+}

@@ -13,7 +13,7 @@
 # define FT_PRINTF_BONUS_H
 
 # include "../libft/libft.h"
-# include "shared.h"
+//# include "shared.h"
 # include <stdarg.h>
 # include <stdint.h>
 # include <stdio.h>
@@ -51,7 +51,7 @@ void	ft_unsigned(t_printf *ft_flags, va_list args, int *length);
 void	ft_percent(t_printf *ft_flags, int *length);
 
 // -- apply -- //
-void	width(const char **str, t_printf *ft_flags);
+void	ft_apply_width(const char **str, t_printf *ft_flags);
 void	ft_apply_flags(const char **str, t_printf *ft_flags);
 void	ft_apply_precision(const char **str, t_printf *ft_flags);
 
@@ -60,5 +60,9 @@ int		ft_numlen(long num);
 void	ft_putnbr(long n, int *length);
 int		ft_numlen_base(unsigned long num, int base);
 void	ft_putnbr_base(unsigned long n, int base, int uppercase, int *length);
+
+int		ft_validation(char c);
+void	ft_putchar(char c, int *length);
+void	ft_putstr(char *str, int *length);
 
 #endif

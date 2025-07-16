@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-# ---------------------------- CONFIGURACIÓN -------------------------------- #
+# ----------------------------- CONFIGURACIÓN -------------------------------- #
 
 NAME        = libftprintf.a
 CC          = cc
@@ -34,22 +34,17 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 
 # ----------------------------- FUENTES ------------------------------------- #
 
-# --- Compartido --- #
-SHARED_DIR  = ./src/shared
-SHARED_SRCS = ft_validation.c
-SHARED_OBJS = $(addprefix $(OBJ_DIR)/, $(SHARED_SRCS:.c=.o))
-
 # --- Mandatory --- #
-SRC_DIR     = ./src/mandatory
-SRCS        = ft_printf.c ft_printf_utils.c ft_flags.c
-OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+MANDATORY_DIR = ./src/mandatory
+MANDATORY_SRCS = ft_printf.c ft_printf_utils.c ft_flags.c ft_validation.c
+MANDATORY_OBJS = $(addprefix $(OBJ_DIR)/, $(MANDATORY_SRCS:.c=.o))
 
 # --- Bonus --- #
-BSRC_DIR    = ./src/bonus
-BSRCS       = ft_printf_bonus.c ft_init.c ft_apply.c ft_utils.c ft_hex.c \
-              ft_integer.c ft_pointer.c ft_string.c utils.c ft_char.c \
-              ft_percent.c ft_unsigned.c
-BOBJS       = $(addprefix $(OBJ_DIR)/, $(BSRCS:.c=.o))
+BONUS_DIR = ./src/bonus
+BONUS_SRCS = ft_printf_bonus.c ft_init.c ft_apply.c ft_hex.c \
+             ft_integer.c ft_pointer.c ft_string.c utils.c ft_char.c \
+             ft_percent.c ft_unsigned.c ft_validation.c
+BONUS_OBJS = $(addprefix $(OBJ_DIR)/, $(BONUS_SRCS:.c=.o))
 
 # --- Tester --- #
 PRINTFTESTER = ./printfTester
@@ -57,14 +52,14 @@ PRINTFTESTER = ./printfTester
 # -------------------------- LÓGICA DE COMPILACIÓN -------------------------- #
 
 ifdef BONUS
-	SOURCES := $(BSRCS)
-	OBJECTS := $(BOBJS) $(SHARED_OBJS)
-	HEADER  := $(HEADER_BONUS)
-	SRC_DIR := $(BSRC_DIR)
+	SRC_DIR  := $(BONUS_DIR)
+	SRCS     := $(BONUS_SRCS)
+	OBJECTS  := $(BONUS_OBJS) $(LIBFT)
+	HEADER   := $(HEADER_BONUS)
 else
-	SOURCES := $(SRCS)
-	OBJECTS := $(OBJS) $(SHARED_OBJS)
-	SRC_DIR := ./src/mandatory
+	SRC_DIR  := $(MANDATORY_DIR)
+	SRCS     := $(MANDATORY_SRCS)
+	OBJECTS  := $(MANDATORY_OBJS)
 endif
 
 # ---------------------------- REGLAS -------------------------------------- #
@@ -77,12 +72,9 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(SHARED_DIR)/%.c $(HEADER)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
 $(NAME): $(OBJECTS)
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
-	@ar rcs $(NAME) $(OBJECTS) $(LIBFT)
+	@ar rcs $(NAME) $(OBJECTS)
 	@echo "$(BLUE)"
 	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
 	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
@@ -98,7 +90,7 @@ bonus:
 libft:
 	@if [ ! -d "$(LIBFT_DIR)" ]; then \
 		echo "$(GREEN)Clonando libft...$(RESET)"; \
-		git clone https://github.com/rogerdevworld/libftall.git $(LIBFT_DIR); \
+		git clone https://github.com/rogerdevworld/libft.git $(LIBFT_DIR); \
 	fi
 	@$(MAKE) -C $(LIBFT_DIR)
 
@@ -107,13 +99,7 @@ test:
 		echo "$(RED)Descargando tester...$(RESET)"; \
 		git clone https://github.com/Tripouille/printfTester.git $(PRINTFTESTER); \
 	fi
-	@$(MAKE)
 	@$(MAKE) bonus
-	@echo "$(GREEN)Test Mandatory...$(RESET)"
-	@make -C $(PRINTFTESTER) m
-	@$(MAKE) clean
-	@echo "$(GREEN)Test Bonus...$(RESET)"
-	@make -C $(PRINTFTESTER) b
 	@echo "$(GREEN)Test Mandatory + Bonus...$(RESET)"
 	@make -C $(PRINTFTESTER) a
 
@@ -126,7 +112,7 @@ fclean: clean
 	@echo "$(GREEN)Limpiando ejecutable y tester...$(RESET)"
 	@$(RM) $(NAME) $(PRINTFTESTER)
 	@make -C $(LIBFT_DIR) fclean
-	@$(RM) $(LIBFT_DIR)
+	@$(RM) -rf $(LIBFT_DIR)
 
 re: fclean all
 

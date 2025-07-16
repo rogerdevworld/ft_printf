@@ -9,7 +9,7 @@
 /*   Updated: 2024/11/26 16:22:42 by rmarrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/shared.h"
+#include "../include/ft_printf.h"
 
 int	ft_validation(char c)
 {

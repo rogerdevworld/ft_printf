@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdint.h>
-# include "shared.h"
 
 /* main funtion*/
 int		ft_printf(const char *str, ...);
@@ -47,4 +46,7 @@ void	ft_pointer(size_t pointer, int *length, int *flag);
 /* • %x Imprime un número hexadecimal (base 16) en minúsculas.
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
 void	ft_hex(unsigned int nbr, int *length, char x, int *flag);
+void	ft_putchar(char character, int *length, int *flag);
+int	ft_validation(char c);
+
 #endif
