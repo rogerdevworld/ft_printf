@@ -19,7 +19,12 @@ void	ft_percent(t_printf *ft_flags, int *length)
 	if (!ft_flags->dash && padding > 0)
 	{
 		while (padding-- > 0)
-			ft_putchar(ft_flags->zero ? '0' : ' ', length);
+		{
+			if (ft_flags->zero)
+				ft_putchar('0', length);
+			else
+				ft_putchar(' ', length);
+		}
 	}
 	ft_putchar('%', length);
 	if (ft_flags->dash && padding > 0)
