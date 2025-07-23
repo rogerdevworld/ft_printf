@@ -63,6 +63,6 @@ int		ft_validation(char c);
 void	ft_putchar(char c, int *length);
 void	ft_putstr(char *str, int *length);
 size_t	ft_strlen(const char *str);
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 
 #endif
