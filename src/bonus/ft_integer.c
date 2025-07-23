@@ -11,74 +11,106 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
+int	ft_calc_zeros(unsigned long num, int is_neg, t_printf *f)
+{
+	int	len;
+	int	zeros;
+
+	len = ft_numlen_base(num, 10);
+	zeros = 0;
+	if (f->dot)
+	{
+		zeros = f->accuracy - len;
+		if (zeros < 0)
+			zeros = 0;
+		f->zero = 0;
+	}
+	else if (f->zero && !f->dash)
+	{
+		zeros = f->width - len;
+		if (is_neg || f->sign || f->space)
+			zeros--;
+		if (zeros < 0)
+			zeros = 0;
+	}
+	return (zeros);
+}
+
+void	ft_print_sign(int is_neg, t_printf *f, int *len)
+{
+	if (is_neg)
+		ft_putchar('-', len);
+	else
+	{
+		if (f->sign)
+			ft_putchar('+', len);
+		else if (f->space)
+			ft_putchar(' ', len);
+	}
+}
+
+void	ft_integer_zero_case(int is_neg, t_printf *f, int *len)
+{
+	int	total;
+	int	padding;
+
+	total = 0;
+	if (is_neg || f->sign || f->space)
+		total = 1;
+	padding = f->width - total;
+	if (!f->dash && padding > 0)
+		while (padding-- > 0)
+			ft_putchar(' ', len);
+	ft_print_sign(is_neg, f, len);
+	if (f->dash && padding > 0)
+		while (padding-- > 0)
+			ft_putchar(' ', len);
+}
+
+void	ft_print_integer(unsigned long abs_num, int is_neg, t_printf *f,
+		int *len)
+{
+	int	zeros;
+	int	num_len;
+	int	total;
+	int	padding;
+
+	zeros = ft_calc_zeros(abs_num, is_neg, f);
+	num_len = ft_numlen_base(abs_num, 10);
+	total = num_len + zeros;
+	if (is_neg || f->sign || f->space)
+		total++;
+	padding = f->width - total;
+	if (abs_num == 0 && f->dot && f->accuracy == 0)
+		return ((void)ft_integer_zero_case(is_neg, f, len));
+	if (!f->dash && padding > 0)
+		while (padding-- > 0)
+			ft_putchar(' ', len);
+	ft_print_sign(is_neg, f, len);
+	while (zeros-- > 0)
+		ft_putchar('0', len);
+	ft_putnbr_base(abs_num, 10, 0, len);
+	if (f->dash && padding > 0)
+		while (padding-- > 0)
+			ft_putchar(' ', len);
+}
+
 void	ft_integer(t_printf *ft_flags, va_list args, int *length)
 {
 	long			num;
 	int				is_negative;
 	unsigned long	abs_num;
-	int				num_len;
-	int				zeros;
-	int				padding;
-	int				total_len;
 
 	num = va_arg(args, int);
-	is_negative = num < 0;
-	abs_num = is_negative ? -num : num;
-	num_len = ft_numlen_base(abs_num, 10);
-	zeros = 0;
-	if (ft_flags->dot)
+	if (num < 0)
 	{
-		zeros = ft_flags->accuracy - num_len;
-		if (zeros < 0)
-			zeros = 0;
-		ft_flags->zero = 0;
+		is_negative = 1;
+		abs_num = (unsigned long)(-num);
 	}
-	else if (ft_flags->zero && !ft_flags->dash)
+	else
 	{
-		zeros = ft_flags->width - num_len;
-		if (is_negative || ft_flags->sign || ft_flags->space)
-			zeros--;
-		if (zeros < 0)
-			zeros = 0;
+		is_negative = 0;
+		abs_num = (unsigned long)num;
 	}
-	total_len = num_len + zeros;
-	if (is_negative || ft_flags->sign || ft_flags->space)
-		total_len++;
-	padding = ft_flags->width - total_len;
-	if (abs_num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
-	{
-		total_len = 0;
-		if (is_negative || ft_flags->sign || ft_flags->space)
-			total_len = 1;
-		padding = ft_flags->width - total_len;
-		if (!ft_flags->dash && padding > 0)
-			while (padding-- > 0)
-				ft_putchar(' ', length);
-		if (is_negative)
-			ft_putchar('-', length);
-		else if (ft_flags->sign)
-			ft_putchar('+', length);
-		else if (ft_flags->space)
-			ft_putchar(' ', length);
-		if (ft_flags->dash && padding > 0)
-			while (padding-- > 0)
-				ft_putchar(' ', length);
-		return ;
-	}
-	if (!ft_flags->dash && padding > 0)
-		while (padding-- > 0)
-			ft_putchar(' ', length);
-	if (is_negative)
-		ft_putchar('-', length);
-	else if (ft_flags->sign)
-		ft_putchar('+', length);
-	else if (ft_flags->space)
-		ft_putchar(' ', length);
-	while (zeros-- > 0)
-		ft_putchar('0', length);
-	if (abs_num != 0 || !ft_flags->dot || ft_flags->accuracy != 0)
-		ft_putnbr_base(abs_num, 10, 0, length);
-	if (ft_flags->dash && padding > 0)
-		while (padding-- > 0)
-			ft_putchar(' ', length);
+	ft_print_integer(abs_num, is_negative, ft_flags, length);
 }
