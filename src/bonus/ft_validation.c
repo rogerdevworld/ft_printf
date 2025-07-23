@@ -16,11 +16,3 @@ int	ft_validation(char c)
 	return (c == 'c' || c == 'i' || c == 's' || c == 'p' || c == 'u' || c == 'd'
 		|| c == 'x' || c == 'X' || c == '%');
 }
-
-void	ft_putstr(char *str, int *length)
-{
-	if (!str)
-		return ;
-	while (*str)
-		ft_putchar(*str++, length);
-}
