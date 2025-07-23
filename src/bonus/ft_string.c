@@ -13,9 +13,9 @@
 
 void	ft_string(t_printf *ft_flags, va_list args, int *length)
 {
-	char *str;
-	int len;
-	int padding;
+	char	*str;
+	int		len;
+	int		padding;
 
 	str = va_arg(args, char *);
 	if (!str)
