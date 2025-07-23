@@ -27,10 +27,12 @@ void	ft_char(t_printf *ft_flags, va_list args, int *length)
 	else
 	{
 		while (padding-- > 0)
+		{
 			if (ft_flags->zero)
 				ft_putchar('0', length);
 			else
-			ft_putchar(' ', length);
+				ft_putchar(' ', length);
+		}
 		ft_putchar(c, length);
 	}
 }
