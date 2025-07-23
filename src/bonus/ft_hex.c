@@ -13,11 +13,11 @@
 
 void	ft_hex(t_printf *ft_flags, va_list args, int *length, char spec)
 {
-	unsigned int	num;
-	int				num_len;
-	int				zeros;
-	int				padding;
-	int				prefix_len;
+	unsigned int num;
+	int num_len;
+	int zeros;
+	int padding;
+	int prefix_len;
 
 	num = va_arg(args, unsigned int);
 	num_len = ft_numlen_base(num, 16);
