@@ -11,30 +11,36 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
+static void	calc_unsigned_format(t_printf *ft_flags, int num_len, int *zeros,
+		int *padding)
+{
+	*zeros = 0;
+	if (ft_flags->dot)
+	{
+		*zeros = ft_flags->accuracy - num_len;
+		if (*zeros < 0)
+			*zeros = 0;
+		ft_flags->zero = 0;
+	}
+	else if (ft_flags->zero && !ft_flags->dash)
+	{
+		*zeros = ft_flags->width - num_len;
+		if (*zeros < 0)
+			*zeros = 0;
+	}
+	*padding = ft_flags->width - num_len - *zeros;
+}
+
 void	ft_unsigned(t_printf *ft_flags, va_list args, int *length)
 {
-	unsigned long	num;
+	unsigned int	num;
 	int				num_len;
 	int				zeros;
 	int				padding;
 
 	num = va_arg(args, unsigned int);
 	num_len = ft_numlen_base(num, 10);
-	zeros = 0;
-	if (ft_flags->dot)
-	{
-		zeros = ft_flags->accuracy - num_len;
-		if (zeros < 0)
-			zeros = 0;
-		ft_flags->zero = 0;
-	}
-	else if (ft_flags->zero && !ft_flags->dash)
-	{
-		zeros = ft_flags->width - num_len;
-		if (zeros < 0)
-			zeros = 0;
-	}
-	padding = ft_flags->width - num_len - zeros;
+	calc_unsigned_format(ft_flags, num_len, &zeros, &padding);
 	if (num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
 	{
 		while (padding-- > 0)
