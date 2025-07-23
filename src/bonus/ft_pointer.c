@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
+void	ft_putstr(char *str, int *length)
+{
+	if (!str)
+		return ;
+	while (*str)
+		ft_putchar(*str++, length);
+}
+
 void	ft_pointer(t_printf *ft_flags, va_list args, int *length)
 {
 	uintptr_t	ptr;
@@ -21,10 +29,7 @@ void	ft_pointer(t_printf *ft_flags, va_list args, int *length)
 	ptr = va_arg(args, uintptr_t);
 	i = 0;
 	if (!ptr)
-	{
-		ft_putstr("(nil)", length);
-		return ;
-	}
+		return ((void)(ft_putstr("(nil)", length)));
 	ft_putstr("0x", length);
 	while (ptr)
 	{
