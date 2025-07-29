@@ -16,34 +16,37 @@ void test_minus_sign(void)
     len2 = ft_printf("1. [%-20p]\n", ptr) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 
-    // Prueba con enteros con signo
+    // Prueba con enteros con signo (i)
     ft_printf("\nTest del signo '-' en enteros con signo %%-10i\n");
-    len1 = printf("2. [%-10i]\n", num);
-    len2 = ft_printf("2. [%-10i]\n", num);
+    len1 = printf("2. [%-10i]\n", num) - 6;
+    len2 = ft_printf("2. [%-10i]\n", num) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 
-    len1 = printf("3. [%-10d]\n", num);
-    len2 = ft_printf("3. [%-10d]\n", num);
+    // Prueba con enteros con signo (d)
+    ft_printf("\nTest del signo '-' en digit %%-10i\n");
+    len1 = printf("3. [%-10d]\n", num) - 6;
+    len2 = ft_printf("3. [%-10d]\n", num) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 
     // Prueba con enteros sin signo
-    ft_printf("\nTest del signo '-' en enteros sin signo\n");
-    len1 = printf("4. [%-10u]\n", unum);
-    len2 = ft_printf("4. [%-10u]\n", unum);
+    ft_printf("\nTest del signo '-' en enteros sin signo %%-10u\n");
+    len1 = printf("4. [%-10u]\n", unum) - 6;
+    len2 = ft_printf("4. [%-10u]\n", unum) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 
     // Prueba con hexadecimal minúscula
-    ft_printf("\nTest del signo '-' en hexadecimal minúscula\n");
-    len1 = printf("5. [%-10x]\n", num);
-    len2 = ft_printf("5. [%-10x]\n", num);
+    ft_printf("\nTest del signo '-' en hexadecimal minúscula %%-10x\n");
+    len1 = printf("5. [%-10x]\n", num) - 6;
+    len2 = ft_printf("5. [%-10x]\n", num) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 
     // Prueba con hexadecimal mayúscula
-    ft_printf("\nTest del signo '-' en hexadecimal mayúscula\n");
-    len1 = printf("6. [%-10X]\n", num);
-    len2 = ft_printf("6. [%-10X]\n", num);
+    ft_printf("\nTest del signo '-' en hexadecimal mayúscula %%-10X\n");
+    len1 = printf("6. [%-10X]\n", num) - 6;
+    len2 = ft_printf("6. [%-10X]\n", num) - 6;
     printf("Len printf: %d, Len ft_printf: %d\n\n", len1, len2);
 }
+
 
 void test_plus_sign(void)
 {

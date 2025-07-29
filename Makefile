@@ -6,7 +6,7 @@
 #    By: rmarrero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 12:58:52 by rmarrero          #+#    #+#              #
-#    Updated: 2025/02/17 11:55:01 by rmarrero         ###   ########.fr        #
+#    Updated: 2025/07/23 21:18:23 by rmarrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 PRINTFTESTER = ./printfTester
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I./include 
-#-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -I./include -fsanitize=leak
 RM = rm -rf
 
 OBJECTS = $(OBJS) $(SHARED_OBJS)
@@ -100,7 +99,6 @@ test:
 	@echo "$(GREEN)Test Mandatory...$(RESET)"
 	@make -C $(PRINTFTESTER) m
 
-	make clean
 
 	@echo "$(GREEN)Test Bonus...$(RESET)"
 	@make -C $(PRINTFTESTER) b
@@ -120,6 +118,9 @@ fclean: clean
 
 	@echo "$(GREEN)clean bonus$(RESET)"
 	$(RM) $(OBJ_DIR)
+
+	@echo "$(GREEN)clean bonus$(RESET)"
+	$(RM) $(PRINTFTESTER)
 
 # Regeneración completa
 re: fclean all

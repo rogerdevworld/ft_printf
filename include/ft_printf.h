@@ -13,10 +13,10 @@
 # define FT_PRINTF_H
 
 /* lib std */
-# include <stdio.h>
-# include <unistd.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include <stdio.h>
+# include <unistd.h>
 
 /* main funtion*/
 int		ft_printf(const char *str, ...);
@@ -33,7 +33,7 @@ void	ft_putchar(const char c, int *length, int *flag);
 /* • %s Imprime una string (como se define por defecto en C) */
 void	ft_putstr(char *args, int *length, int *flag);
 
-/* 
+/*
 • %d Imprime un número decimal (base 10).
 • %i Imprime un entero en base 10.
 */
@@ -47,6 +47,6 @@ void	ft_pointer(size_t pointer, int *length, int *flag);
 • %X Imprime un número hexadecimal (base 16) en mayúsculas. */
 void	ft_hex(unsigned int nbr, int *length, char x, int *flag);
 void	ft_putchar(char character, int *length, int *flag);
-int	ft_validation(char c);
+int		ft_validation(char c);
 
 #endif

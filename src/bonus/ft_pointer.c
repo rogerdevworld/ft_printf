@@ -37,7 +37,10 @@ void	ft_pointer(t_printf *ft_flags, va_list args, int *length)
 		ptr /= 16;
 	}
 	padding = ft_flags->width - (i + 2);
-	if (!ft_flags->dash && padding > 0)
+	if (ft_flags->zero && padding > 0)
+		while (padding-- > 0)
+			ft_putchar('0', length);
+	else if (!ft_flags->dash && padding > 0)
 		while (padding-- > 0)
 			ft_putchar(' ', length);
 	while (i-- > 0)
