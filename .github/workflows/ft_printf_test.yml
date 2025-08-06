@@ -41,6 +41,6 @@ jobs:
           submodules: true
 
       - name: Run Norminette
-        uses: 42School/norminette-action@v2
+        uses: 42School/norminette-action@v1
         with:
           files: 'src/ include/'
