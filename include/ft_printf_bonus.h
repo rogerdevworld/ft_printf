@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../../libft.h"
+// # include "../../libft.h"
 
 typedef struct s_printf
 {
