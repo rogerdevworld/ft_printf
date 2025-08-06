@@ -24,9 +24,7 @@ jobs:
         run: sudo apt update && sudo apt install -y make gcc
 
       - name: Run FT_PRINTF Tests
-        run: |
-          cd printfTester
-          make && make bonus && make test
+        run: make && make bonus && make test
 
   norminette_check:
     name: Run Norminette
@@ -46,4 +44,4 @@ jobs:
 
       - name: Run Norminette
         run: |
-          norminette src/
+          norminette src/ include/
