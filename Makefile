@@ -24,10 +24,19 @@ OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
 # --- Bonus --- #
 BSRC_DIR = ./src/bonus/
 BSRCS =	$(BSRC_DIR)ft_printf_bonus.c \
-		$(BSRC_DIR)ft_init.c $(BSRC_DIR)ft_apply.c \
-		$(BSRC_DIR)ft_utils.c $(BSRC_DIR)ft_hex.c $(BSRC_DIR)ft_integer.c \
-		$(BSRC_DIR)ft_pointer.c $(BSRC_DIR)ft_string.c $ $(BSRC_DIR)ft_char.c $(BSRC_DIR)ft_validation.c \
-		$(BSRC_DIR)ft_percent.c $(BSRC_DIR)ft_unsigned.c $(BSRC_DIR)ft_isdigit.c $(BSRC_DIR)ft_strlen.c
+		$(BSRC_DIR)ft_init_bonus.c \
+		$(BSRC_DIR)ft_apply_bonus.c \
+		$(BSRC_DIR)ft_utils_bonus.c \
+		$(BSRC_DIR)ft_hex_bonus.c \
+		$(BSRC_DIR)ft_integer_bonus.c \
+		$(BSRC_DIR)ft_pointer_bonus.c \
+		$(BSRC_DIR)ft_string_bonus.c \
+		$(BSRC_DIR)ft_char_bonus.c \
+		$(BSRC_DIR)ft_validation_bonus.c \
+		$(BSRC_DIR)ft_percent_bonus.c \
+		$(BSRC_DIR)ft_unsigned_bonus.c \
+		$(BSRC_DIR)ft_isdigit_bonus.c \
+		$(BSRC_DIR)ft_strlen_bonus.c
 
 BOBJS = $(BSRCS:$(BSRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
@@ -73,13 +82,21 @@ $(OBJ_DIR)/%.o: $(SHARED_DIR)%.c $(HEADER) Makefile | $(OBJ_DIR)
 $(NAME): $(OBJECTS) $(HEADER) Makefile
 	@echo "$(GREEN)Compilando $(NAME)...$(RESET)"
 	ar rsc $(NAME) $(OBJECTS) $(LIBFT)
-	@echo "$(BLUE)"
-	@echo "$(YELLOW)           ($(RESET)__$(YELLOW))\           $(RESET)"
-	@echo "$(YELLOW)           ($(RESET)oo$(YELLOW))\\________  $(RESET)"
-	@echo "$(RESET)           /|| \\        \\ $(NAME) ready$(RESET)"
-	@echo "$(RESET)              ||------w | $(RESET)"
-	@echo "$(RESET)              ||       || $(RESET)"
-	@echo "$(YELLOW)THE COW MAKES MUUUUUUUUUU!$(RESET)"
+	@echo "                                                                                "
+	@echo "                                                                                "
+	@echo "# **************************************************************************** #"
+	@echo "#                                                                              #"
+	@echo "#                                                         :::      ::::::::    #"
+	@echo "#    ft_printf                                          :+:      :+:    :+:    #"
+	@echo "#                                                     +:+ +:+         +:+      #"
+	@echo "#    By: rmarrero rmarrero@student.42barcelona.com  +#+  +:+       +#+         #"
+	@echo "#                                                 +#+#+#+#+#+   +#+            #"
+	@echo "#    Created: 2024/09/16 12:58:52 by rmarrero          #+#    #+#              #"
+	@echo "#    Updated: 2025/07/29 13:04:23 by rmarrero         ###   ########.fr        #"
+	@echo "#                                                                              #"
+	@echo "# **************************************************************************** #"
+	@echo "                                                                                "
+	@echo "                                                                                "
 	@echo "$(RESET)"
 
 # Regla para compilar el bonus

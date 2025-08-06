@@ -33,6 +33,14 @@ typedef struct s_printf
 	int	hash;
 }		t_printf;
 
+typedef struct s_hex_info
+{
+	int	num_len;
+	int	zeros;
+	int	padding;
+	int	prefix_len;
+	int	is_uppercase;
+}		t_hex_info;
 /* Main function */
 int		ft_printf(const char *str, ...);
 

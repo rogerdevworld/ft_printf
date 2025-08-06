@@ -11,53 +11,53 @@
 /* ************************************************************************** */
 #include "../../include/ft_printf_bonus.h"
 
-void	ft_hex(t_printf *ft_flags, va_list args, int *length, char spec)
+void	ft_putstr(char *str, int *length)
 {
-	unsigned int num;
-	int num_len;
-	int zeros;
-	int padding;
-	int prefix_len;
-
-	num = va_arg(args, unsigned int);
-	num_len = ft_numlen_base(num, 16);
-	zeros = 0;
-	prefix_len = 0;
-	if (ft_flags->hash && num != 0)
-		prefix_len = 2;
-	if (ft_flags->dot)
-	{
-		zeros = ft_flags->accuracy - num_len;
-		if (zeros < 0)
-			zeros = 0;
-		ft_flags->zero = 0;
-	}
-	else if (ft_flags->zero && !ft_flags->dash)
-	{
-		zeros = ft_flags->width - num_len - prefix_len;
-		if (zeros < 0)
-			zeros = 0;
-	}
-	padding = ft_flags->width - num_len - zeros - prefix_len;
-	if (num == 0 && ft_flags->dot && ft_flags->accuracy == 0)
-	{
-		while (padding-- > 0)
-			ft_putchar(' ', length);
+	if (!str)
 		return ;
-	}
-	if (!ft_flags->dash && padding > 0)
-		while (padding-- > 0)
-			ft_putchar(' ', length);
-	if (ft_flags->hash && num != 0)
+	while (*str)
+		ft_putchar(*str++, length);
+}
+
+void	ft_print_pointer(t_printf *ft_flags, char *buffer, int i, int *length)
+{
+	int	padding;
+
+	padding = ft_flags->width - (i + 2);
+	if (ft_flags->zero && padding > 0)
 	{
-		ft_putchar('0', length);
-		ft_putchar(spec, length);
+		while (padding-- > 0)
+			ft_putchar('0', length);
 	}
-	while (zeros-- > 0)
-		ft_putchar('0', length);
-	if (num != 0 || !ft_flags->dot || ft_flags->accuracy != 0)
-		ft_putnbr_base(num, 16, (spec == 'X'), length);
-	if (ft_flags->dash && padding > 0)
+	else if (!ft_flags->dash && padding > 0)
+	{
 		while (padding-- > 0)
 			ft_putchar(' ', length);
+	}
+	while (i-- > 0)
+		ft_putchar(buffer[i], length);
+	if (ft_flags->dash && padding > 0)
+	{
+		while (padding-- > 0)
+			ft_putchar(' ', length);
+	}
+}
+
+void	ft_pointer(t_printf *ft_flags, va_list args, int *length)
+{
+	uintptr_t	ptr;
+	char		buffer[20];
+	int			i;
+
+	ptr = va_arg(args, uintptr_t);
+	if (!ptr)
+		return ((void)(ft_putstr("(nil)", length)));
+	ft_putstr("0x", length);
+	i = 0;
+	while (ptr)
+	{
+		buffer[i++] = "0123456789abcdef"[ptr % 16];
+		ptr /= 16;
+	}
+	ft_print_pointer(ft_flags, buffer, i, length);
 }
