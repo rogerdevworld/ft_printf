@@ -21,7 +21,9 @@ jobs:
           submodules: true
 
       - name: Install Required Packages
-        run: sudo apt update && sudo apt install -y make gcc
+        run: |
+          sudo apt update
+          sudo apt install -y make gcc valgrind
 
       - name: Set Terminal Environment
         run: echo "TERM=xterm" >> $GITHUB_ENV
