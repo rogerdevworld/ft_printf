@@ -34,6 +34,7 @@ jobs:
   norminette_check:
     name: Run Norminette
     runs-on: ubuntu-latest
+    needs: ft_printf_tester
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -51,4 +52,5 @@ jobs:
 
       - name: Run Norminette
         run: |
-          norminette src/ include/
+          norminette src
+          norminette include
